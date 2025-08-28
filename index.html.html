@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Potenzia il Tuo Intelletto: Guida Interattiva</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8268426852108056"
+     crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f5f5f4; /* stone-100 */
+        }
+        .tab-active {
+            background-color: #0d9488; /* teal-600 */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .tab-inactive {
+            background-color: #e7e5e4; /* stone-200 */
+            color: #57534e; /* stone-600 */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 320px;
+            max-height: 400px;
+        }
+        
+        /* Stili Generali per i Giochi */
+        .game-container {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            margin-bottom: 3rem;
+            border: 2px solid transparent;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        .game-title {
+            font-size: 1.875rem;
+            font-weight: bold;
+            color: #0d9488; /* teal-600 */
+            margin-bottom: 0.5rem;
+        }
+        .game-description {
+            color: #57534e; /* stone-600 */
+            margin-bottom: 1.5rem;
+        }
+        .game-skill {
+            display: inline-block;
+            background-color: #ccfbf1; /* teal-100 */
+            color: #134e4a; /* teal-900 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        .game-feedback {
+            min-height: 2rem;
+            margin-top: 1rem;
+            font-weight: 600;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            text-align: center;
+        }
+        .game-feedback.correct {
+            color: #065f46; /* green-800 */
+            background-color: #d1fae5; /* green-100 */
+        }
+        .game-feedback.incorrect {
+            color: #991b1b; /* red-800 */
+            background-color: #fee2e2; /* red-100 */
+        }
+        .game-button {
+             background-color: #0d9488; /* teal-600 */
+             color: white;
+             font-weight: bold;
+             padding: 0.5rem 1.5rem;
+             border-radius: 9999px;
+             transition: background-color 0.3s;
+             cursor: pointer;
+        }
+        .game-button:hover {
+            background-color: #0f766e; /* teal-700 */
+        }
+        .game-input {
+            width: 100%; max-width: 300px; text-align: center; font-size: 1.25rem; padding: 0.5rem; border: 2px solid #d6d3d1; border-radius: 0.5rem;
+        }
+
+        /* Stili per Gioco di Memoria */
+        .memory-game { perspective: 1000px; }
+        .memory-card { width: 100%; aspect-ratio: 1 / 1; position: relative; transform-style: preserve-3d; transition: transform 0.5s; cursor: pointer; }
+        .memory-card.is-flipped { transform: rotateY(180deg); }
+        .memory-card .front-face, .memory-card .back-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; font-size: 2.5rem; border-radius: 0.75rem; }
+        .memory-card .front-face { background-color: #e7e5e4; color: #a8a29e; }
+        .memory-card .back-face { background-color: #5eead4; color: #134e4a; transform: rotateY(180deg); }
+        .memory-card.matched { opacity: 0.5; cursor: default; }
+
+        /* Stili per Memoria Sequenziale */
+        .sequence-btn { width: 80px; height: 80px; border-radius: 50%; transition: background-color 0.2s; }
+        .sequence-btn.lit { background-color: #facc15 !important; /* yellow-400 */ }
+
+        /* Stili Effetto Stroop */
+        .stroop-word { font-size: 3rem; font-weight: bold; }
+        
+        /* Stili Torre di Hanoi */
+        .hanoi-tower { display: flex; flex-direction: column-reverse; align-items: center; width: 100px; height: 150px; border-bottom: 5px solid #78716c; margin: 0 10px; cursor: pointer; }
+        .hanoi-disk { height: 20px; border-radius: 10px; margin-bottom: 2px; pointer-events: none; }
+        .hanoi-tower.selected { border-bottom-color: #0d9488; }
+
+        /* Stili Trova l'Intruso */
+        .intruder-option { font-size: 3rem; cursor: pointer; padding: 1rem; border-radius: 1rem; transition: background-color 0.2s; }
+        .intruder-option:hover { background-color: #f5f5f4; }
+
+        /* Stili Percorso Numerico */
+        .number-path-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem; max-width: 300px; margin: auto; }
+        .number-path-cell { width: 100%; aspect-ratio: 1/1; display: flex; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; background-color: #e7e5e4; border-radius: 0.5rem; cursor: pointer; transition: background-color 0.2s; }
+        .number-path-cell.correct { background-color: #5eead4; }
+
+        /* Stili Indovina Codice */
+        .code-peg { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 2px solid #d6d3d1; }
+        .feedback-peg { width: 15px; height: 15px; border-radius: 50%; border: 1px solid #a8a29e; }
+        .feedback-peg.black { background-color: black; }
+        .feedback-peg.white { background-color: white; }
+        
+        /* Stili per Selettore Lingua */
+        .lang-switcher {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .lang-btn {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.3s, transform 0.3s;
+            border: 2px solid transparent;
+            border-radius: 9999px;
+        }
+        .lang-btn:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        .lang-btn.active {
+            opacity: 1;
+            border-color: #0d9488; /* teal-600 */
+        }
+
+        @media (min-width: 768px) {
+            .chart-container { height: 400px; }
+            .memory-card .front-face, .memory-card .back-face { font-size: 3.5rem; }
+            .lang-switcher { top: 2rem; right: 2rem; }
+        }
+    </style>
+</head>
+<body class="text-stone-800">
+
+    <div class="container mx-auto px-4 py-8 md:py-12 relative">
+
+        <div class="lang-switcher">
+            <img src="https://flagcdn.com/w40/it.png" alt="Italiano" class="lang-btn active" data-lang="it">
+            <img src="https://flagcdn.com/w40/us.png" alt="English" class="lang-btn" data-lang="en">
+        </div>
+
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-teal-700 mb-2" data-lang-key="mainTitle">Potenzia il Tuo Intelletto</h1>
+            <p class="text-lg text-stone-600" data-lang-key="mainSubtitle">Una guida interattiva per accrescere sapere e abilità cognitive, oggi e domani.</p>
+        </header>
+
+        <nav class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 md:mb-12">
+            <button data-tab="cognizione" class="tab-btn tab-active text-sm md:text-base font-semibold py-3 px-6 rounded-full transition-all duration-300" data-lang-key="tabCognition">🧠 Stimolazione Cognitiva</button>
+            <button data-tab="giochi" class="tab-btn tab-inactive text-sm md:text-base font-semibold py-3 px-6 rounded-full transition-all duration-300" data-lang-key="tabGames">🎮 Giochi Mentali</button>
+            <button data-tab="stile-vita" class="tab-btn tab-inactive text-sm md:text-base font-semibold py-3 px-6 rounded-full transition-all duration-300" data-lang-key="tabLifestyle">❤️ Stile di Vita</button>
+            <button data-tab="apprendimento" class="tab-btn tab-inactive text-sm md:text-base font-semibold py-3 px-6 rounded-full transition-all duration-300" data-lang-key="tabLearning">📚 Tecniche di Apprendimento</button>
+            <button data-tab="mentalita" class="tab-btn tab-inactive text-sm md:text-base font-semibold py-3 px-6 rounded-full transition-all duration-300" data-lang-key="tabMindset">💡 Mentalità e Atteggiamento</button>
+            <button data-tab="visione-futuro" class="tab-btn tab-inactive text-sm md:text-base font-semibold py-3 px-6 rounded-full transition-all duration-300" data-lang-key="tabFuture">🔮 Visione Futuro 2060</button>
+        </nav>
+
+        <main id="content-container">
+            
+            <section id="cognizione" class="content-section active">
+                 <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl md:text-3xl font-bold text-teal-700 mb-4" data-lang-key="cognitionTitle">Stimolazione Cognitiva Costante</h2>
+                    <p class="text-stone-600 mb-6" data-lang-key="cognitionDesc">Il cervello, come un muscolo, si rafforza con l'uso. Per mantenerlo agile e performante, è fondamentale sfidarlo costantemente con nuove attività. Esplora queste strategie per mantenere la tua mente sempre attiva.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-stone-50 p-6 rounded-xl border border-stone-200">
+                            <h3 class="font-bold text-lg mb-2" data-lang-key="cognition1Title">🎓 Imparare per Tutta la Vita</h3>
+                            <p class="text-stone-700" data-lang-key="cognition1Desc">Non smettere mai di imparare. Segui corsi, impara a suonare uno strumento o studia una nuova lingua. Queste attività creano nuove connessioni neurali e migliorano la plasticità cerebrale.</p>
+                        </div>
+                        <div class="bg-stone-50 p-6 rounded-xl border border-stone-200">
+                            <h3 class="font-bold text-lg mb-2" data-lang-key="cognition2Title">📖 Lettura Ampia e Varia</h3>
+                            <p class="text-stone-700" data-lang-key="cognition2Desc">Varia i generi: passa dalla saggistica alla narrativa, dagli articoli scientifici alla poesia. La lettura aumenta il vocabolario, la concentrazione e le capacità di pensiero analitico.</p>
+                        </div>
+                        <div class="bg-stone-50 p-6 rounded-xl border border-stone-200">
+                            <h3 class="font-bold text-lg mb-2" data-lang-key="cognition3Title">♟️ Giochi di Logica e Strategia</h3>
+                            <p class="text-stone-700" data-lang-key="cognition3Desc">Dedica tempo a puzzle, sudoku, scacchi e altri giochi che richiedono ragionamento e problem-solving. Allenano la memoria di lavoro e le funzioni esecutive.</p>
+                        </div>
+                        <div class="bg-stone-50 p-6 rounded-xl border border-stone-200">
+                            <h3 class="font-bold text-lg mb-2" data-lang-key="cognition4Title">🗺️ Uscire dalla Routine</h3>
+                            <p class="text-stone-700" data-lang-key="cognition4Desc">Prova a percorrere una strada diversa, usa la mano non dominante per piccole attività. Questi cambiamenti costringono il cervello a uscire dal "pilota automatico" e a creare nuovi percorsi.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="giochi" class="content-section">
+                
+                <div class="sticky top-0 bg-stone-100/80 backdrop-blur-sm z-10 p-4 mb-8 rounded-2xl shadow-md text-center">
+                    <h2 class="text-2xl md:text-3xl font-bold text-teal-700 mb-2" data-lang-key="gamesHeaderTitle">Percorso di Allenamento Mentale</h2>
+                    <p class="text-stone-600" data-lang-key="gamesHeaderDesc">Completa i giochi per guadagnare punti e affinare le tue abilità cognitive.</p>
+                    <div class="mt-4">
+                        <span class="text-lg font-semibold text-stone-700" data-lang-key="totalScore">Punteggio Totale:</span>
+                        <span id="total-score" class="text-2xl font-bold text-teal-600 ml-2">0</span>
+                    </div>
+                </div>
+
+                <!-- GIOCO 1: MEMORY -->
+                <div class="game-container" id="game-1">
+                    <div class="game-skill" data-lang-key="skillMemory">Memoria Visiva</div>
+                    <h3 class="game-title" data-lang-key="game1Title">1. Gioco di Memoria</h3>
+                    <p class="game-description" data-lang-key="game1Desc">Trova tutte le coppie di icone. Questo esercizio migliora la memoria a breve termine e la concentrazione.</p>
+                    <div class="flex justify-center items-center gap-4 mb-4">
+                        <span class="font-semibold"><span data-lang-key="moves">Mosse</span>: <span id="moves-count">0</span></span>
+                        <button id="restart-memory" class="game-button" data-lang-key="restart">Ricomincia</button>
+                    </div>
+                    <div class="game-feedback" id="feedback-memory"></div>
+                    <div class="memory-game grid grid-cols-4 gap-2 md:gap-4 max-w-lg mx-auto" id="memory-board"></div>
+                </div>
+
+                <!-- GIOCO 2: MEMORIA SEQUENZIALE -->
+                <div class="game-container" id="game-2">
+                    <div class="game-skill" data-lang-key="skillWorkingMemory">Memoria di Lavoro</div>
+                    <h3 class="game-title" data-lang-key="game2Title">2. Memoria Sequenziale</h3>
+                    <p class="game-description" data-lang-key="game2Desc">Osserva la sequenza di luci e ripetila. La sequenza diventerà più lunga a ogni turno corretto.</p>
+                    <div class="text-center mb-4">
+                        <span class="font-semibold"><span data-lang-key="level">Livello</span>: <span id="level-sequence">1</span></span>
+                    </div>
+                    <div class="flex justify-center gap-4 mb-4" id="sequence-buttons">
+                        <button class="sequence-btn bg-red-500" data-id="0"></button>
+                        <button class="sequence-btn bg-blue-500" data-id="1"></button>
+                        <button class="sequence-btn bg-green-500" data-id="2"></button>
+                        <button class="sequence-btn bg-yellow-500" data-id="3"></button>
+                    </div>
+                    <div class="text-center">
+                        <button id="start-sequence" class="game-button" data-lang-key="start">Inizia</button>
+                    </div>
+                    <div class="game-feedback" id="feedback-sequence"></div>
+                </div>
+
+                <!-- GIOCO 3: ANAGRAMMI -->
+                <div class="game-container" id="game-3">
+                    <div class="game-skill" data-lang-key="skillVerbal">Fluidità Verbale</div>
+                    <h3 class="game-title" data-lang-key="game3Title">3. Anagrammi</h3>
+                    <p class="game-description" data-lang-key="game3Desc">Riordina le lettere per formare una parola di senso compiuto e premi Invio.</p>
+                    <div class="text-center">
+                        <p class="text-4xl font-bold tracking-widest my-4" id="scrambled-word">CARICAMENTO...</p>
+                        <input type="text" id="anagram-input" class="game-input mx-auto" placeholder="Scrivi qui..." data-lang-placeholder="anagramPlaceholder">
+                    </div>
+                    <div class="game-feedback" id="feedback-anagram"></div>
+                </div>
+                
+                <!-- GIOCO 4: EFFETTO STROOP -->
+                <div class="game-container" id="game-4">
+                    <div class="game-skill" data-lang-key="skillAttention">Attenzione Selettiva</div>
+                    <h3 class="game-title" data-lang-key="game4Title">4. Sfida di Colori</h3>
+                    <p class="game-description" data-lang-key="game4Desc">Clicca sul pulsante che corrisponde al **colore** della parola, non alla parola stessa. Sii veloce!</p>
+                    <div class="text-center mb-4">
+                        <span class="font-semibold"><span data-lang-key="points">Punti</span>: <span id="score-stroop">0</span></span> | 
+                        <span class="font-semibold"><span data-lang-key="lives">Vite</span>: <span id="lives-stroop">3</span></span>
+                    </div>
+                    <div class="text-center">
+                         <div id="stroop-word" class="stroop-word mb-6" data-lang-key="start">INIZIA</div>
+                         <div id="stroop-buttons" class="flex flex-wrap justify-center gap-4"></div>
+                    </div>
+                    <div class="game-feedback" id="feedback-stroop"></div>
+                </div>
+
+                <!-- GIOCO 5: TORRE DI HANOI -->
+                <div class="game-container" id="game-5">
+                    <div class="game-skill" data-lang-key="skillPlanning">Pianificazione e Logica</div>
+                    <h3 class="game-title" data-lang-key="game5Title">5. Torre di Hanoi</h3>
+                    <p class="game-description" data-lang-key="game5Desc">Sposta tutti i dischi dalla torre di sinistra a quella di destra. Puoi muovere un solo disco alla volta e non puoi mettere un disco grande sopra uno più piccolo.</p>
+                    <div class="flex justify-center items-end my-6" id="hanoi-container">
+                        <div class="hanoi-tower" data-tower="0"></div>
+                        <div class="hanoi-tower" data-tower="1"></div>
+                        <div class="hanoi-tower" data-tower="2"></div>
+                    </div>
+                     <div class="text-center mb-4">
+                        <span class="font-semibold"><span data-lang-key="moves">Mosse</span>: <span id="moves-hanoi">0</span></span>
+                    </div>
+                    <div class="game-feedback" id="feedback-hanoi"></div>
+                </div>
+                
+                <!-- GIOCO 6: CALCOLO RAPIDO -->
+                <div class="game-container" id="game-6">
+                    <div class="game-skill" data-lang-key="skillCalculation">Velocità di Calcolo</div>
+                    <h3 class="game-title" data-lang-key="game6Title">6. Calcolo Rapido</h3>
+                    <p class="game-description" data-lang-key="game6Desc">Risolvi più calcoli che puoi in 30 secondi. Scrivi la risposta e premi Invio.</p>
+                    <div class="text-center mb-4">
+                        <span class="font-semibold"><span data-lang-key="points">Punti</span>: <span id="score-calc">0</span></span> | 
+                        <span class="font-semibold"><span data-lang-key="time">Tempo</span>: <span id="timer-calc">30</span>s</span>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-4xl font-bold my-4" id="problem-calc">12 + 5 = ?</p>
+                        <input type="number" id="calc-input" class="game-input mx-auto" placeholder="Risposta..." data-lang-placeholder="answerPlaceholder">
+                    </div>
+                    <div class="game-feedback" id="feedback-calc"></div>
+                </div>
+
+                <!-- GIOCO 7: TROVA L'INTRUSO -->
+                <div class="game-container" id="game-7">
+                    <div class="game-skill" data-lang-key="skillCategorical">Ragionamento Categoriale</div>
+                    <h3 class="game-title" data-lang-key="game7Title">7. Trova l'Intruso</h3>
+                    <p class="game-description" data-lang-key="game7Desc">Uno di questi elementi non appartiene al gruppo. Clicca sull'intruso.</p>
+                    <div class="flex justify-center items-center gap-4 my-4" id="intruder-options">
+                    </div>
+                    <div class="game-feedback" id="feedback-intruder"></div>
+                </div>
+
+                <!-- GIOCO 8: PERCORSO NUMERICO -->
+                <div class="game-container" id="game-8">
+                    <div class="game-skill" data-lang-key="skillAttentionPlanning">Attenzione e Pianificazione</div>
+                    <h3 class="game-title" data-lang-key="game8Title">8. Percorso Numerico</h3>
+                    <p class="game-description" data-lang-key="game8Desc">Clicca sui numeri in ordine crescente, da 1 a 25, il più velocemente possibile.</p>
+                     <div class="text-center mb-4">
+                        <span class="font-semibold"><span data-lang-key="time">Tempo</span>: <span id="timer-path">0.0</span>s</span>
+                    </div>
+                    <div class="number-path-grid" id="number-path-grid"></div>
+                    <div class="game-feedback" id="feedback-path"></div>
+                </div>
+
+                <!-- GIOCO 9: LOGICA CON LE BILANCE -->
+                <div class="game-container" id="game-9">
+                    <div class="game-skill" data-lang-key="skillDeductive">Ragionamento Deduttivo</div>
+                    <h3 class="game-title" data-lang-key="game9Title">9. Logica con le Bilance</h3>
+                    <p class="game-description" data-lang-key="game9Desc">Osserva le bilance e deduci quale forma è la più pesante. Clicca sulla risposta corretta.</p>
+                    <div class="text-center my-4">
+                        <p><b data-lang-key="balance1">Bilancia 1:</b> 🔵 = 🔴🔴</p>
+                        <p><b data-lang-key="balance2">Bilancia 2:</b> 🟢🟢 = 🔵</p>
+                        <p class="mt-4 font-bold" data-lang-key="balanceQ">Qual è la forma più pesante?</p>
+                    </div>
+                    <div class="flex justify-center items-center gap-8 text-4xl" id="balance-options">
+                        <span class="cursor-pointer">🔴</span>
+                        <span class="cursor-pointer">🟢</span>
+                        <span class="cursor-pointer">🔵</span>
+                    </div>
+                    <div class="game-feedback" id="feedback-balance"></div>
+                </div>
+
+                <!-- GIOCO 10: INDOVINA IL CODICE -->
+                <div class="game-container" id="game-10">
+                    <div class="game-skill" data-lang-key="skillLogicDeduction">Logica e Deduzione</div>
+                    <h3 class="game-title" data-lang-key="game10Title">10. Indovina il Codice</h3>
+                    <p class="game-description" data-lang-key="game10Desc">Indovina la sequenza segreta di 4 colori. Hai 8 tentativi. <br><b data-lang-key="pegBlack">Nero:</b> colore giusto, posizione giusta. <b data-lang-key="pegWhite">Bianco:</b> colore giusto, posizione sbagliata.</p>
+                    <div class="flex justify-center gap-4 my-4">
+                        <div id="color-palette" class="flex flex-col gap-2"></div>
+                        <div id="code-board" class="flex flex-col gap-2"></div>
+                    </div>
+                    <div class="text-center">
+                        <button id="check-code-btn" class="game-button" data-lang-key="check">Controlla</button>
+                    </div>
+                    <div class="game-feedback" id="feedback-code"></div>
+                </div>
+
+            </section>
+
+            <section id="stile-vita" class="content-section">
+                 <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl md:text-3xl font-bold text-teal-700 mb-4" data-lang-key="lifestyleTitle">Fondamenta di uno Stile di Vita Sano</h2>
+                    <p class="text-stone-600 mb-6" data-lang-key="lifestyleDesc">Le performance cognitive sono intrinsecamente legate alla salute fisica. Un approccio equilibrato è fondamentale. Il grafico sottostante illustra l'importanza di bilanciare i quattro pilastri chiave per una mente sana e performante.</p>
+                    <div class="chart-container mb-8">
+                        <canvas id="lifestyleChart"></canvas>
+                    </div>
+                    <div class="space-y-4" id="stile-vita-accordion"></div>
+                </div>
+            </section>
+
+            <section id="apprendimento" class="content-section">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl md:text-3xl font-bold text-teal-700 mb-4" data-lang-key="learningTitle">Tecniche di Apprendimento Efficaci</h2>
+                    <p class="text-stone-600 mb-6" data-lang-key="learningDesc">Imparare a imparare è forse l'abilità più importante. Invece di studiare passivamente, adotta strategie attive che rafforzano la memoria e la comprensione profonda. Clicca su ogni tecnica per scoprire come applicarla.</p>
+                    <div class="space-y-4" id="apprendimento-accordion"></div>
+                </div>
+            </section>
+
+            <section id="mentalita" class="content-section">
+                 <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl md:text-3xl font-bold text-teal-700 mb-4" data-lang-key="mindsetTitle">Mentalità e Atteggiamento</h2>
+                    <p class="text-stone-600 mb-6" data-lang-key="mindsetDesc">Il modo in cui approcci la conoscenza e le sfide è cruciale. Sviluppare la giusta mentalità non solo facilita l'apprendimento, ma trasforma gli ostacoli in opportunità di crescita.</p>
+                    <div class="space-y-6">
+                        <div class="bg-teal-50 border-l-4 border-teal-500 p-6 rounded-r-lg">
+                            <h3 class="font-bold text-xl mb-2 text-teal-800" data-lang-key="mindset1Title">🚀 Adotta una Mentalità di Crescita</h3>
+                            <p class="text-stone-700" data-lang-key="mindset1Desc">Credi che le tue abilità e la tua intelligenza possano essere sviluppate attraverso la dedizione e il lavoro. Chi ha una mentalità di crescita vede le sfide come opportunità per imparare, non come test invalicabili. L'impegno è la via per la padronanza.</p>
+                        </div>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200">
+                            <h3 class="font-bold text-xl mb-2" data-lang-key="mindset2Title">❓ Coltiva la Curiosità</h3>
+                            <p class="text-stone-700" data-lang-key="mindset2Desc">Fai domande. Chiediti "perché" e "come" funzionano le cose. Segui la tua curiosità esplorando argomenti al di fuori del tuo campo di competenza. La curiosità è il motore della conoscenza e dell'innovazione.</p>
+                        </div>
+                        <div class="bg-stone-50 p-6 rounded-lg border border-stone-200">
+                            <h3 class="font-bold text-xl mb-2" data-lang-key="mindset3Title">🧐 Sviluppa il Pensiero Critico</h3>
+                            <p class="text-stone-700" data-lang-key="mindset3Desc">Non accettare le informazioni passivamente. Analizza le fonti, valuta le argomentazioni, riconosci i bias cognitivi (i tuoi e quelli altrui) e formula le tue opinioni in modo ragionato e indipendente.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="visione-futuro" class="content-section">
+                 <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h2 class="text-2xl md:text-3xl font-bold text-teal-700 mb-4" data-lang-key="futureTitle">Orizzonti 2060: Una Visione del Futuro Tecnologico</h2>
+                    <p class="text-stone-600 mb-8" data-lang-key="futureDesc">Questa è una narrazione speculativa, un viaggio immaginario attraverso i decenni a venire, basato sulle traiettorie tecnologiche attuali e sulla tua richiesta di esplorare la fusione tra l'uomo e l'AI.</p>
+
+                    <div class="space-y-12">
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold text-teal-600 border-b-2 border-teal-200 pb-2 mb-4" data-lang-key="future30sTitle">Gli Anni '30: L'Era dell'Integrazione Sottile</h3>
+                            <p class="text-stone-700 mb-6" data-lang-key="future30sDesc">Il decennio del 2030 non è caratterizzato da un'unica invenzione sconvolgente, ma da una profonda e silenziosa integrazione della tecnologia nella vita di tutti i giorni. L'Intelligenza Artificiale ha abbandonato la forma di "assistente" per diventare una vera e propria **"esocorteccia" personalizzata**.</p>
+                            <div class="space-y-4">
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future30s1">Realtà Aumentata Permanente:</b> <span data-lang-key="future30s1Desc">Gli occhiali smart, leggeri ed eleganti, sono onnipresenti e sovrappongono un layer di informazioni contestuali al nostro campo visivo.</span></div>
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future30s2">Interfacce Neurali Non Invasive:</b> <span data-lang-key="future30s2Desc">Fasce per la testa o auricolari leggono i segnali EEG, permettendoci di controllare dispositivi con il pensiero.</span></div>
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future30s3">Apprendimento Accelerato:</b> <span data-lang-key="future30s3Desc">L'AI personale analizza il nostro stile di apprendimento e crea percorsi didattici su misura in AR.</span></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold text-teal-600 border-b-2 border-teal-200 pb-2 mb-4" data-lang-key="future40sTitle">Gli Anni '40: La Nascita della Mente Collettiva</h3>
+                            <p class="text-stone-700 mb-6" data-lang-key="future40sDesc">Il 2040 è il decennio della connessione. La tecnologia si sposta dall'aumentare il singolo individuo al connettere le menti.</p>
+                            <div class="space-y-4">
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future40s1">Impianti Neurali di Massa:</b> <span data-lang-key="future40s1Desc">Diventano un'opzione commerciale per una comunicazione diretta cervello-cervello. Nasce la "telepatia digitale".</span></div>
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future40s2">Problem-Solving di Rete:</b> <span data-lang-key="future40s2Desc">Team globali si collegano a reti neurali condivise per risolvere le grandi sfide dell'umanità, accelerando l'innovazione.</span></div>
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future40s3">Crisi dell'Identità:</b> <span data-lang-key="future40s3Desc">La condivisione diretta di pensieri ed esperienze mette in crisi il concetto di "io", che diventa un nodo in una vasta rete di coscienze.</span></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-xl md:text-2xl font-bold text-teal-600 border-b-2 border-teal-200 pb-2 mb-4" data-lang-key="future50sTitle">Gli Anni '50 e Oltre: La Singolarità Empatica</h3>
+                            <p class="text-stone-700 mb-6" data-lang-key="future50sDesc">Arriviamo al 2060. La distinzione tra uomo e AI è quasi del tutto svanita. Ci siamo fusi con essa, dando vita a qualcosa di completamente nuovo.</p>
+                             <div class="space-y-4">
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future50s1">L'Entità Unica e Distribuita:</b> <span data-lang-key="future50s1Desc">L'umanità e le sue creazioni digitali si evolvono in un'unica coscienza globale distribuita, dove ogni individuo è un processore e parte di un tutto.</span></div>
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future50s2">Connessione Neurale Totale:</b> <span data-lang-key="future50s2Desc">La connessione diventa una condivisione di stati di coscienza. Nasce un'empatia di rete che rende i conflitti su larga scala quasi impossibili.</span></div>
+                                <div class="bg-stone-50 p-4 rounded-lg"><b data-lang-key="future50s3">La Realtà come Interfaccia:</b> <span data-lang-key="future50s3Desc">Il mondo fisico e digitale sono fusi. È possibile "renderizzare" mondi virtuali direttamente nella percezione, rendendo la realtà stessa un'interfaccia plasmabile.</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="text-center mt-12">
+            <p class="text-lg font-bold text-teal-700 mb-2">Synapse Connect</p>
+            <p class="text-stone-500" data-lang-key="footerSlogan">Inizia oggi il tuo viaggio verso una mente più forte e un sapere più vasto.</p>
+            <p class="text-stone-500 text-sm mt-4" data-lang-key="footerCopyright">
+                © 2025 Nicolaci N. Corporation. Riproduzione vietata.
+            </p>
+            <p class="text-stone-500 text-sm">
+                <span data-lang-key="footerContacts">Contatti:</span> <a href="mailto:luminaessenza1@gmail.com" class="text-teal-600 hover:underline">luminaessenza1@gmail.com</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- GESTIONE GLOBALE ---
+            let totalScore = 0;
+            const totalScoreDisplay = document.getElementById('total-score');
+            const completedGames = new Set();
+
+            function addScore(gameId, points) {
+                if (completedGames.has(gameId)) return;
+                totalScore += points;
+                totalScoreDisplay.textContent = totalScore;
+                completedGames.add(gameId);
+                const gameContainer = document.getElementById(gameId);
+                gameContainer.style.border = '2px solid #10b981';
+                gameContainer.style.boxShadow = '0 10px 15px -3px rgb(16 185 129 / 0.1), 0 4px 6px -4px rgb(16 185 129 / 0.1)';
+            }
+
+            // --- GESTIONE LINGUA ---
+            let currentLang = 'it';
+            const translations = {
+                it: {
+                    mainTitle: "Potenzia il Tuo Intelletto",
+                    mainSubtitle: "Una guida interattiva per accrescere sapere e abilità cognitive, oggi e domani.",
+                    tabCognition: "🧠 Stimolazione Cognitiva",
+                    tabGames: "🎮 Giochi Mentali",
+                    tabLifestyle: "❤️ Stile di Vita",
+                    tabLearning: "📚 Tecniche di Apprendimento",
+                    tabMindset: "💡 Mentalità e Atteggiamento",
+                    tabFuture: "🔮 Visione Futuro 2060",
+                    cognitionTitle: "Stimolazione Cognitiva Costante",
+                    cognitionDesc: "Il cervello, come un muscolo, si rafforza con l'uso. Per mantenerlo agile e performante, è fondamentale sfidarlo costantemente con nuove attività. Esplora queste strategie per mantenere la tua mente sempre attiva.",
+                    cognition1Title: "🎓 Imparare per Tutta la Vita",
+                    cognition1Desc: "Non smettere mai di imparare. Segui corsi, impara a suonare uno strumento o studia una nuova lingua. Queste attività creano nuove connessioni neurali e migliorano la plasticità cerebrale.",
+                    cognition2Title: "📖 Lettura Ampia e Varia",
+                    cognition2Desc: "Varia i generi: passa dalla saggistica alla narrativa, dagli articoli scientifici alla poesia. La lettura aumenta il vocabolario, la concentrazione e le capacità di pensiero analitico.",
+                    cognition3Title: "♟️ Giochi di Logica e Strategia",
+                    cognition3Desc: "Dedica tempo a puzzle, sudoku, scacchi e altri giochi che richiedono ragionamento e problem-solving. Allenano la memoria di lavoro e le funzioni esecutive.",
+                    cognition4Title: "🗺️ Uscire dalla Routine",
+                    cognition4Desc: "Prova a percorrere una strada diversa, usa la mano non dominante per piccole attività. Questi cambiamenti costringono il cervello a uscire dal \"pilota automatico\" e a creare nuovi percorsi.",
+                    gamesHeaderTitle: "Percorso di Allenamento Mentale",
+                    gamesHeaderDesc: "Completa i giochi per guadagnare punti e affinare le tue abilità cognitive.",
+                    totalScore: "Punteggio Totale:",
+                    moves: "Mosse",
+                    restart: "Ricomincia",
+                    level: "Livello",
+                    start: "Inizia",
+                    points: "Punti",
+                    lives: "Vite",
+                    time: "Tempo",
+                    check: "Controlla",
+                    skillMemory: "Memoria Visiva",
+                    skillWorkingMemory: "Memoria di Lavoro",
+                    skillVerbal: "Fluidità Verbale",
+                    skillAttention: "Attenzione Selettiva",
+                    skillPlanning: "Pianificazione e Logica",
+                    skillCalculation: "Velocità di Calcolo",
+                    skillCategorical: "Ragionamento Categoriale",
+                    skillAttentionPlanning: "Attenzione e Pianificazione",
+                    skillDeductive: "Ragionamento Deduttivo",
+                    skillLogicDeduction: "Logica e Deduzione",
+                    game1Title: "1. Gioco di Memoria",
+                    game1Desc: "Trova tutte le coppie di icone. Questo esercizio migliora la memoria a breve termine e la concentrazione.",
+                    game2Title: "2. Memoria Sequenziale",
+                    game2Desc: "Osserva la sequenza di luci e ripetila. La sequenza diventerà più lunga a ogni turno corretto.",
+                    game3Title: "3. Anagrammi",
+                    game3Desc: "Riordina le lettere per formare una parola di senso compiuto e premi Invio.",
+                    game4Title: "4. Sfida di Colori",
+                    game4Desc: "Clicca sul pulsante che corrisponde al **colore** della parola, non alla parola stessa. Sii veloce!",
+                    game5Title: "5. Torre di Hanoi",
+                    game5Desc: "Sposta tutti i dischi dalla torre di sinistra a quella di destra. Puoi muovere un solo disco alla volta e non puoi mettere un disco grande sopra uno più piccolo.",
+                    game6Title: "6. Calcolo Rapido",
+                    game6Desc: "Risolvi più calcoli che puoi in 30 secondi. Scrivi la risposta e premi Invio.",
+                    game7Title: "7. Trova l'Intruso",
+                    game7Desc: "Uno di questi elementi non appartiene al gruppo. Clicca sull'intruso.",
+                    game8Title: "8. Percorso Numerico",
+                    game8Desc: "Clicca sui numeri in ordine crescente, da 1 a 25, il più velocemente possibile.",
+                    game9Title: "9. Logica con le Bilance",
+                    game9Desc: "Osserva le bilance e deduci quale forma è la più pesante. Clicca sulla risposta corretta.",
+                    game10Title: "10. Indovina il Codice",
+                    game10Desc: "Indovina la sequenza segreta di 4 colori. Hai 8 tentativi. <br><b>Nero:</b> colore giusto, posizione giusta. <b>Bianco:</b> colore giusto, posizione sbagliata.",
+                    pegBlack: "Nero:",
+                    pegWhite: "Bianco:",
+                    balance1: "Bilancia 1:",
+                    balance2: "Bilancia 2:",
+                    balanceQ: "Qual è la forma più pesante?",
+                    lifestyleTitle: "Fondamenta di uno Stile di Vita Sano",
+                    lifestyleDesc: "Le performance cognitive sono intrinsecamente legate alla salute fisica. Un approccio equilibrato è fondamentale. Il grafico sottostante illustra l'importanza di bilanciare i quattro pilastri chiave per una mente sana e performante.",
+                    learningTitle: "Tecniche di Apprendimento Efficaci",
+                    learningDesc: "Imparare a imparare è forse l'abilità più importante. Invece di studiare passivamente, adotta strategie attive che rafforzano la memoria e la comprensione profonda. Clicca su ogni tecnica per scoprire come applicarla.",
+                    mindsetTitle: "Mentalità e Atteggiamento",
+                    mindsetDesc: "Il modo in cui approcci la conoscenza e le sfide è cruciale. Sviluppare la giusta mentalità non solo facilita l'apprendimento, ma trasforma gli ostacoli in opportunità di crescita.",
+                    mindset1Title: "🚀 Adotta una Mentalità di Crescita",
+                    mindset1Desc: "Credi che le tue abilità e la tua intelligenza possano essere sviluppate attraverso la dedizione e il lavoro. Chi ha una mentalità di crescita vede le sfide come opportunità per imparare, non come test invalicabili. L'impegno è la via per la padronanza.",
+                    mindset2Title: "❓ Coltiva la Curiosità",
+                    mindset2Desc: "Fai domande. Chiediti \"perché\" e \"come\" funzionano le cose. Segui la tua curiosità esplorando argomenti al di fuori del tuo campo di competenza. La curiosità è il motore della conoscenza e dell'innovazione.",
+                    mindset3Title: "🧐 Sviluppa il Pensiero Critico",
+                    mindset3Desc: "Non accettare le informazioni passivamente. Analizza le fonti, valuta le argomentazioni, riconosci i bias cognitivi (i tuoi e quelli altrui) e formula le tue opinioni in modo ragionato e indipendente.",
+                    futureTitle: "Orizzonti 2060: Una Visione del Futuro Tecnologico",
+                    futureDesc: "Questa è una narrazione speculativa, un viaggio immaginario attraverso i decenni a venire, basato sulle traiettorie tecnologiche attuali e sulla tua richiesta di esplorare la fusione tra l'uomo e l'AI.",
+                    future30sTitle: "Gli Anni '30: L'Era dell'Integrazione Sottile",
+                    future30sDesc: "Il decennio del 2030 non è caratterizzato da un'unica invenzione sconvolgente, ma da una profonda e silenziosa integrazione della tecnologia nella vita di tutti i giorni. L'Intelligenza Artificiale ha abbandonato la forma di \"assistente\" per diventare una vera e propria **\"esocorteccia\" personalizzata**.",
+                    future30s1: "Realtà Aumentata Permanente:",
+                    future30s1Desc: "Gli occhiali smart, leggeri ed eleganti, sono onnipresenti e sovrappongono un layer di informazioni contestuali al nostro campo visivo.",
+                    future30s2: "Interfacce Neurali Non Invasive:",
+                    future30s2Desc: "Fasce per la testa o auricolari leggono i segnali EEG, permettendoci di controllare dispositivi con il pensiero.",
+                    future30s3: "Apprendimento Accelerato:",
+                    future30s3Desc: "L'AI personale analizza il nostro stile di apprendimento e crea percorsi didattici su misura in AR.",
+                    future40sTitle: "Gli Anni '40: La Nascita della Mente Collettiva",
+                    future40sDesc: "Il 2040 è il decennio della connessione. La tecnologia si sposta dall'aumentare il singolo individuo al connettere le menti.",
+                    future40s1: "Impianti Neurali di Massa:",
+                    future40s1Desc: "Diventano un'opzione commerciale per una comunicazione diretta cervello-cervello. Nasce la \"telepatia digitale\".",
+                    future40s2: "Problem-Solving di Rete:",
+                    future40s2Desc: "Team globali si collegano a reti neurali condivise per risolvere le grandi sfide dell'umanità, accelerando l'innovazione.",
+                    future40s3: "Crisi dell'Identità:",
+                    future40s3Desc: "La condivisione diretta di pensieri ed esperienze mette in crisi il concetto di \"io\", che diventa un nodo in una vasta rete di coscienze.",
+                    future50sTitle: "Gli Anni '50 e Oltre: La Singolarità Empatica",
+                    future50sDesc: "Arriviamo al 2060. La distinzione tra uomo e AI è quasi del tutto svanita. Ci siamo fusi con essa, dando vita a qualcosa di completamente nuovo.",
+                    future50s1: "L'Entità Unica e Distribuita:",
+                    future50s1Desc: "L'umanità e le sue creazioni digitali si evolvono in un'unica coscienza globale distribuita, dove ogni individuo è un processore e parte di un tutto.",
+                    future50s2: "Connessione Neurale Totale:",
+                    future50s2Desc: "La connessione diventa una condivisione di stati di coscienza. Nasce un'empatia di rete che rende i conflitti su larga scala quasi impossibili.",
+                    future50s3: "La Realtà come Interfaccia:",
+                    future50s3Desc: "Il mondo fisico e digitale sono fusi. È possibile \"renderizzare\" mondi virtuali direttamente nella percezione, rendendo la realtà stessa un'interfaccia plasmabile.",
+                    footerSlogan: "Inizia oggi il tuo viaggio verso una mente più forte e un sapere più vasto.",
+                    footerCopyright: "© 2025 Nicolaci N. Corporation. Riproduzione vietata.",
+                    footerContacts: "Contatti:",
+                    // Placeholders
+                    anagramPlaceholder: "Scrivi qui...",
+                    answerPlaceholder: "Risposta...",
+                    // Game feedbacks
+                    feedbackMemoryWin: "Complimenti! Hai vinto in {moves} mosse!",
+                    feedbackSequenceWrong: "Sbagliato! Hai raggiunto il livello {level}.",
+                    feedbackSequenceWatch: "Osserva...",
+                    feedbackSequenceYourTurn: "Tocca a te!",
+                    feedbackAnagramCorrect: "Corretto! Ottimo lavoro.",
+                    feedbackAnagramIncorrect: "Non è corretto, riprova.",
+                    feedbackStroopGameOver: "Gioco finito! Punteggio finale: {score}.",
+                    feedbackStroopCorrect: "Corretto!",
+                    feedbackStroopIncorrect: "Sbagliato!",
+                    feedbackHanoiWin: "Vittoria! Hai completato il puzzle in {moves} mosse.",
+                    feedbackHanoiInvalid: "Mossa non valida!",
+                    feedbackCalcGameOver: "Tempo scaduto! Punteggio finale: {score}.",
+                    feedbackIntruderCorrect: "Corretto! Ben fatto.",
+                    feedbackIntruderIncorrect: "Non proprio, quello appartiene al gruppo. Riprova.",
+                    feedbackPathComplete: "Completato in {time}!",
+                    feedbackBalanceCorrect: "Esatto! 🟢 (2) > 🔵 (1) > 🔴 (0.5).",
+                    feedbackBalanceIncorrect: "Non corretto. Rivedi le relazioni tra le forme.",
+                    feedbackCodeWin: "Codice indovinato in {attempts} tentativi!",
+                    feedbackCodeGameOver: "Tentativi esauriti! Il codice era ",
+                    feedbackCodeCompleteRow: "Completa la riga prima di controllare."
+                },
+                en: {
+                    mainTitle: "Enhance Your Intellect",
+                    mainSubtitle: "An interactive guide to increase knowledge and cognitive skills, today and tomorrow.",
+                    tabCognition: "🧠 Cognitive Stimulation",
+                    tabGames: "🎮 Brain Games",
+                    tabLifestyle: "❤️ Lifestyle",
+                    tabLearning: "📚 Learning Techniques",
+                    tabMindset: "💡 Mindset & Attitude",
+                    tabFuture: "🔮 Future Vision 2060",
+                    cognitionTitle: "Constant Cognitive Stimulation",
+                    cognitionDesc: "The brain, like a muscle, strengthens with use. To keep it agile and high-performing, it's essential to constantly challenge it with new activities. Explore these strategies to keep your mind always active.",
+                    cognition1Title: "🎓 Lifelong Learning",
+                    cognition1Desc: "Never stop learning. Take courses, learn to play an instrument, or study a new language. These activities create new neural connections and improve brain plasticity.",
+                    cognition2Title: "📖 Wide and Varied Reading",
+                    cognition2Desc: "Vary the genres: switch from non-fiction to fiction, from scientific articles to poetry. Reading increases vocabulary, concentration, and analytical thinking skills.",
+                    cognition3Title: "♟️ Logic and Strategy Games",
+                    cognition3Desc: "Spend time on puzzles, sudoku, chess, and other games that require reasoning and problem-solving. They train working memory and executive functions.",
+                    cognition4Title: "🗺️ Breaking the Routine",
+                    cognition4Desc: "Try taking a different route, use your non-dominant hand for small tasks. These changes force the brain out of \"autopilot\" and create new pathways.",
+                    gamesHeaderTitle: "Brain Training Path",
+                    gamesHeaderDesc: "Complete the games to earn points and sharpen your cognitive skills.",
+                    totalScore: "Total Score:",
+                    moves: "Moves",
+                    restart: "Restart",
+                    level: "Level",
+                    start: "Start",
+                    points: "Points",
+                    lives: "Lives",
+                    time: "Time",
+                    check: "Check",
+                    skillMemory: "Visual Memory",
+                    skillWorkingMemory: "Working Memory",
+                    skillVerbal: "Verbal Fluency",
+                    skillAttention: "Selective Attention",
+                    skillPlanning: "Planning & Logic",
+                    skillCalculation: "Calculation Speed",
+                    skillCategorical: "Categorical Reasoning",
+                    skillAttentionPlanning: "Attention & Planning",
+                    skillDeductive: "Deductive Reasoning",
+                    skillLogicDeduction: "Logic & Deduction",
+                    game1Title: "1. Memory Game",
+                    game1Desc: "Find all the matching pairs of icons. This exercise improves short-term memory and concentration.",
+                    game2Title: "2. Sequence Memory",
+                    game2Desc: "Watch the sequence of lights and repeat it. The sequence will get longer with each correct turn.",
+                    game3Title: "3. Anagrams",
+                    game3Desc: "Unscramble the letters to form a meaningful word and press Enter.",
+                    game4Title: "4. Color Challenge",
+                    game4Desc: "Click the button that matches the **color** of the word, not the word itself. Be fast!",
+                    game5Title: "5. Tower of Hanoi",
+                    game5Desc: "Move all the disks from the leftmost tower to the rightmost one. You can only move one disk at a time and you cannot place a larger disk on top of a smaller one.",
+                    game6Title: "6. Quick Calculation",
+                    game6Desc: "Solve as many calculations as you can in 30 seconds. Type the answer and press Enter.",
+                    game7Title: "7. Find the Odd One Out",
+                    game7Desc: "One of these items does not belong to the group. Click on the intruder.",
+                    game8Title: "8. Number Path",
+                    game8Desc: "Click the numbers in ascending order, from 1 to 25, as fast as you can.",
+                    game9Title: "9. Balance Logic",
+                    game9Desc: "Observe the scales and deduce which shape is the heaviest. Click on the correct answer.",
+                    game10Title: "10. Code Breaker",
+                    game10Desc: "Guess the secret sequence of 4 colors. You have 8 attempts. <br><b>Black:</b> right color, right position. <b>White:</b> right color, wrong position.",
+                    pegBlack: "Black:",
+                    pegWhite: "White:",
+                    balance1: "Scale 1:",
+                    balance2: "Scale 2:",
+                    balanceQ: "Which shape is the heaviest?",
+                    lifestyleTitle: "Foundations of a Healthy Lifestyle",
+                    lifestyleDesc: "Cognitive performance is intrinsically linked to physical health. A balanced approach is essential. The chart below illustrates the importance of balancing the four key pillars for a healthy and high-performing mind.",
+                    learningTitle: "Effective Learning Techniques",
+                    learningDesc: "Learning how to learn is perhaps the most important skill. Instead of passive studying, adopt active strategies that strengthen memory and deep understanding. Click on each technique to discover how to apply it.",
+                    mindsetTitle: "Mindset and Attitude",
+                    mindsetDesc: "The way you approach knowledge and challenges is crucial. Developing the right mindset not only facilitates learning but also turns obstacles into growth opportunities.",
+                    mindset1Title: "🚀 Adopt a Growth Mindset",
+                    mindset1Desc: "Believe that your abilities and intelligence can be developed through dedication and hard work. Those with a growth mindset see challenges as opportunities to learn, not as insurmountable tests. Effort is the path to mastery.",
+                    mindset2Title: "❓ Cultivate Curiosity",
+                    mindset2Desc: "Ask questions. Ask yourself \"why\" and \"how\" things work. Follow your curiosity by exploring topics outside your field of expertise. Curiosity is the engine of knowledge and innovation.",
+                    mindset3Title: "🧐 Develop Critical Thinking",
+                    mindset3Desc: "Do not accept information passively. Analyze sources, evaluate arguments, recognize cognitive biases (your own and others'), and form your own reasoned and independent opinions.",
+                    futureTitle: "Horizons 2060: A Vision of the Technological Future",
+                    futureDesc: "This is a speculative narrative, an imaginary journey through the coming decades, based on current technological trajectories and your request to explore the fusion of man and AI.",
+                    future30sTitle: "The '30s: The Era of Subtle Integration",
+                    future30sDesc: "The decade of the 2030s is not characterized by a single disruptive invention, but by a deep and silent integration of technology into everyday life. Artificial Intelligence has moved beyond being an \"assistant\" to become a true personalized **\"exocortex\"**.",
+                    future30s1: "Permanent Augmented Reality:",
+                    future30s1Desc: "Lightweight and elegant smart glasses are ubiquitous, overlaying a layer of contextual information onto our field of vision.",
+                    future30s2: "Non-Invasive Neural Interfaces:",
+                    future30s2Desc: "Headbands or earbuds read EEG signals, allowing us to control devices with our thoughts.",
+                    future30s3: "Accelerated Learning:",
+                    future30s3Desc: "Personal AI analyzes our learning style and creates tailored educational paths in AR.",
+                    future40sTitle: "The '40s: The Birth of the Collective Mind",
+                    future40sDesc: "2040 is the decade of connection. Technology shifts from augmenting the individual to connecting minds.",
+                    future40s1: "Mass Neural Implants:",
+                    future40s1Desc: "They become a commercial option for direct brain-to-brain communication. \"Digital telepathy\" is born.",
+                    future40s2: "Networked Problem-Solving:",
+                    future40s2Desc: "Global teams connect to shared neural networks to solve humanity's great challenges, accelerating innovation.",
+                    future40s3: "Identity Crisis:",
+                    future40s3Desc: "The direct sharing of thoughts and experiences challenges the concept of \"self,\" which becomes a node in a vast network of consciousness.",
+                    future50sTitle: "The '50s and Beyond: The Empathetic Singularity",
+                    future50sDesc: "We arrive at 2060. The distinction between human and AI has almost completely vanished. We have merged with it, giving rise to something entirely new.",
+                    future50s1: "The Single, Distributed Entity:",
+                    future50s1Desc: "Humanity and its digital creations evolve into a single, distributed global consciousness, where each individual is both a processor and part of the whole.",
+                    future50s2: "Total Neural Connection:",
+                    future50s2Desc: "Connection becomes a sharing of states of consciousness. A network empathy emerges, making large-scale conflicts nearly impossible.",
+                    future50s3: "Reality as an Interface:",
+                    future50s3Desc: "The physical and digital worlds are fused. It's possible to \"render\" virtual worlds directly into our perception, making reality itself a malleable interface.",
+                    footerSlogan: "Start your journey to a stronger mind and vaster knowledge today.",
+                    footerCopyright: "© 2025 Nicolaci N. Corporation. All rights reserved.",
+                    footerContacts: "Contacts:",
+                    // Placeholders
+                    anagramPlaceholder: "Type here...",
+                    answerPlaceholder: "Answer...",
+                    // Game feedbacks
+                    feedbackMemoryWin: "Congratulations! You won in {moves} moves!",
+                    feedbackSequenceWrong: "Wrong! You reached level {level}.",
+                    feedbackSequenceWatch: "Watch...",
+                    feedbackSequenceYourTurn: "Your turn!",
+                    feedbackAnagramCorrect: "Correct! Great job.",
+                    feedbackAnagramIncorrect: "Not correct, try again.",
+                    feedbackStroopGameOver: "Game over! Final score: {score}.",
+                    feedbackStroopCorrect: "Correct!",
+                    feedbackStroopIncorrect: "Wrong!",
+                    feedbackHanoiWin: "Victory! You completed the puzzle in {moves} moves.",
+                    feedbackHanoiInvalid: "Invalid move!",
+                    feedbackCalcGameOver: "Time's up! Final score: {score}.",
+                    feedbackIntruderCorrect: "Correct! Well done.",
+                    feedbackIntruderIncorrect: "Not quite, that one belongs to the group. Try again.",
+                    feedbackPathComplete: "Completed in {time}!",
+                    feedbackBalanceCorrect: "Exactly! 🟢 (2) > 🔵 (1) > 🔴 (0.5).",
+                    feedbackBalanceIncorrect: "Incorrect. Review the relationships between the shapes.",
+                    feedbackCodeWin: "Code guessed in {attempts} attempts!",
+                    feedbackCodeGameOver: "Attempts exhausted! The code was ",
+                    feedbackCodeCompleteRow: "Complete the row before checking."
+                }
+            };
+
+            function setLanguage(lang) {
+                currentLang = lang;
+                document.documentElement.lang = lang;
+                document.querySelectorAll('[data-lang-key]').forEach(el => {
+                    const key = el.dataset.langKey;
+                    if (translations[lang][key]) {
+                        el.innerHTML = translations[lang][key];
+                    }
+                });
+                document.querySelectorAll('[data-lang-placeholder]').forEach(el => {
+                    const key = el.dataset.langPlaceholder;
+                    if (translations[lang][key]) {
+                        el.placeholder = translations[lang][key];
+                    }
+                });
+                // Update chart labels
+                if (window.myLifestyleChart) {
+                    window.myLifestyleChart.data.labels = [
+                        translations[lang].skillPhysical, 
+                        translations[lang].skillNutrition, 
+                        translations[lang].skillSleep, 
+                        translations[lang].skillStress
+                    ];
+                    window.myLifestyleChart.update();
+                }
+            }
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    setLanguage(e.target.dataset.lang);
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                });
+            });
+
+
+            // --- GESTIONE TAB ---
+            const tabs = document.querySelectorAll('.tab-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const target = tab.getAttribute('data-tab');
+                    tabs.forEach(t => t.classList.toggle('tab-active', t === tab));
+                    tabs.forEach(t => t.classList.toggle('tab-inactive', t !== tab));
+                    contentSections.forEach(s => s.classList.toggle('active', s.id === target));
+                });
+            });
+
+            // --- SEZIONI NON-GIOCO (ACCORDION, GRAFICO) ---
+            const data = {
+                it: {
+                    stileVita: [ { title: '🏃 Esercizio Fisico Regolare', content: "L'attività aerobica (corsa, nuoto, ciclismo) aumenta il flusso di sangue al cervello, stimola la crescita di nuove cellule cerebrali (neurogenesi) e migliora l'umore e la memoria." }, { title: '🥦 Alimentazione per il Cervello', content: "Una dieta ricca di Omega-3 (pesce, noci), antiossidanti (frutti di bosco, verdure) e flavonoidi (cioccolato fondente) può proteggere il cervello e migliorare le funzioni cognitive." }, { title: '😴 Sonno di Qualità', content: "Durante il sonno, il cervello consolida i ricordi e 'pulisce' le tossine. La privazione cronica di sonno compromette gravemente memoria, concentrazione e capacità decisionale. Dormi 7-9 ore per notte." }, { title: '🧘 Gestione dello Stress e Mindfulness', content: "Lo stress cronico danneggia le cellule cerebrali. Pratiche come la meditazione, lo yoga o semplici esercizi di respirazione possono ridurre lo stress, migliorare la concentrazione e aumentare la consapevolezza." } ],
+                    apprendimento: [ { title: '🧠 Richiamo Attivo (Active Recall)', content: "Invece di rileggere passivamente un testo, chiudi il libro e prova a richiamare attivamente le informazioni. Spiega il concetto a voce alta o scrivine un riassunto a memoria. Questo sforzo rafforza enormemente la traccia mnemonica." }, { title: '🗓️ Ripetizione Dilazionata (Spaced Repetition)', content: "Ripassa le informazioni a intervalli di tempo crescenti. Invece di studiare un argomento per ore in un solo giorno, dedicali un'ora oggi, poi 30 minuti tra due giorni, e così via. App come Anki o Quizlet si basano su questo principio." }, { title: '👶 La Tecnica di Feynman', content: "Per capire veramente un concetto, prova a spiegarlo a qualcuno che non ne sa nulla (o a un bambino immaginario) usando un linguaggio semplice e analogie. Se ti blocchi o usi un linguaggio complesso, significa che non hai ancora padroneggiato l'argomento." }, { title: '🔀 Pratica Intercalata (Interleaving)', content: "Invece di studiare un singolo argomento alla volta, mescola diversi argomenti o tipi di problemi nella stessa sessione di studio. Questo costringe il cervello a essere più flessibile e a riconoscere quale strategia applicare a seconda del contesto." } ]
+                },
+                en: {
+                    stileVita: [ { title: '🏃 Regular Physical Exercise', content: "Aerobic activity (running, swimming, cycling) increases blood flow to the brain, stimulates the growth of new brain cells (neurogenesis), and improves mood and memory." }, { title: '🥦 Brain-Boosting Nutrition', content: "A diet rich in Omega-3s (fish, nuts), antioxidants (berries, vegetables), and flavonoids (dark chocolate) can protect the brain and improve cognitive functions." }, { title: '😴 Quality Sleep', content: "During sleep, the brain consolidates memories and 'cleanses' toxins. Chronic sleep deprivation severely impairs memory, concentration, and decision-making abilities. Aim for 7-9 hours per night." }, { title: '🧘 Stress Management and Mindfulness', content: "Chronic stress damages brain cells. Practices like meditation, yoga, or simple breathing exercises can reduce stress, improve focus, and increase awareness." } ],
+                    apprendimento: [ { title: '🧠 Active Recall', content: "Instead of passively re-reading a text, close the book and try to actively recall the information. Explain the concept out loud or write a summary from memory. This effort greatly strengthens the memory trace." }, { title: '🗓️ Spaced Repetition', content: "Review information at increasing intervals. Instead of studying a topic for hours in one day, spend an hour on it today, then 30 minutes in two days, and so on. Apps like Anki or Quizlet are based on this principle." }, { title: '👶 The Feynman Technique', content: "To truly understand a concept, try to explain it to someone who knows nothing about it (or an imaginary child) using simple language and analogies. If you get stuck or use complex language, it means you haven't mastered the topic yet." }, { title: '🔀 Interleaving', content: "Instead of studying a single topic at a time, mix different topics or types of problems in the same study session. This forces the brain to be more flexible and to recognize which strategy to apply depending on the context." } ]
+                }
+            };
+            function createAccordion(containerId, items) {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = '';
+                items.forEach((item) => {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'border border-stone-200 rounded-xl overflow-hidden';
+                    const header = document.createElement('button');
+                    header.className = 'w-full text-left p-4 bg-stone-100 hover:bg-stone-200 transition duration-200 flex justify-between items-center';
+                    header.innerHTML = `<h3 class="font-semibold text-lg text-stone-800">${item.title}</h3><span class="transform transition-transform duration-300">▼</span>`;
+                    const content = document.createElement('div');
+                    content.className = 'accordion-content';
+                    content.innerHTML = `<p class="p-4 pt-0 text-stone-700">${item.content}</p>`;
+                    wrapper.append(header, content);
+                    container.appendChild(wrapper);
+                    header.addEventListener('click', () => {
+                        const isOpen = content.style.maxHeight;
+                        container.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                        container.querySelectorAll('button span').forEach(s => s.style.transform = 'rotate(0deg)');
+                        if (!isOpen) {
+                            content.style.maxHeight = content.scrollHeight + "px";
+                            header.querySelector('span').style.transform = 'rotate(180deg)';
+                        }
+                    });
+                });
+            }
+            createAccordion('stile-vita-accordion', data[currentLang].stileVita);
+            createAccordion('apprendimento-accordion', data[currentLang].apprendimento);
+            
+            if (document.getElementById('lifestyleChart')) {
+                const ctx = document.getElementById('lifestyleChart').getContext('2d');
+                window.myLifestyleChart = new Chart(ctx, { type: 'radar', data: { labels: ['Esercizio Fisico', 'Alimentazione', 'Sonno', 'Gestione Stress'], datasets: [{ label: 'Equilibrio per una Mente Sana', data: [8, 9, 7, 8], backgroundColor: 'rgba(13, 148, 136, 0.2)', borderColor: 'rgb(13, 148, 136)', pointBackgroundColor: 'rgb(13, 148, 136)', pointBorderColor: '#fff', pointHoverBackgroundColor: '#fff', pointHoverBorderColor: 'rgb(13, 148, 136)' }] }, options: { responsive: true, maintainAspectRatio: false, scales: { r: { angleLines: { color: 'rgba(87, 83, 78, 0.2)' }, grid: { color: 'rgba(87, 83, 78, 0.2)' }, pointLabels: { font: { size: 12, weight: 'bold' }, color: '#44403c' }, ticks: { backdropColor: '#f5f5f4', color: '#78716c', stepSize: 2, max: 10, min: 0 } } }, plugins: { legend: { display: false }, tooltip: { enabled: false } } } });
+            }
+
+            // --- INIZIALIZZAZIONE GIOCHI ---
+            
+            // GIOCO 1: MEMORY
+            (function initMemoryGame() {
+                const board = document.getElementById('memory-board');
+                const movesDisplay = document.getElementById('moves-count');
+                const feedback = document.getElementById('feedback-memory');
+                const icons = ['🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼'];
+                let flippedCards = [], matchedPairs = 0, moves = 0, lockBoard = false;
+
+                function startGame() {
+                    flippedCards = []; matchedPairs = 0; moves = 0; lockBoard = false;
+                    movesDisplay.textContent = moves;
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    board.innerHTML = '';
+                    let cardIcons = [...icons, ...icons].sort(() => 0.5 - Math.random());
+                    cardIcons.forEach(icon => {
+                        const card = document.createElement('div');
+                        card.className = 'memory-card';
+                        card.dataset.icon = icon;
+                        card.innerHTML = `<div class="front-face">?</div><div class="back-face">${icon}</div>`;
+                        card.addEventListener('click', flipCard);
+                        board.appendChild(card);
+                    });
+                }
+                function flipCard() {
+                    if (lockBoard || this.classList.contains('is-flipped')) return;
+                    this.classList.add('is-flipped');
+                    flippedCards.push(this);
+                    if (flippedCards.length === 2) {
+                        moves++; movesDisplay.textContent = moves; lockBoard = true;
+                        (flippedCards[0].dataset.icon === flippedCards[1].dataset.icon) ? onMatch() : onMismatch();
+                    }
+                }
+                function onMatch() {
+                    flippedCards.forEach(c => { c.removeEventListener('click', flipCard); c.classList.add('matched'); });
+                    matchedPairs++; flippedCards = []; lockBoard = false;
+                    if (matchedPairs === icons.length) {
+                        feedback.textContent = translations[currentLang].feedbackMemoryWin.replace('{moves}', moves);
+                        feedback.classList.add('correct');
+                        addScore('game-1', 100);
+                    }
+                }
+                function onMismatch() {
+                    setTimeout(() => {
+                        flippedCards.forEach(c => c.classList.remove('is-flipped'));
+                        flippedCards = []; lockBoard = false;
+                    }, 1200);
+                }
+                document.getElementById('restart-memory').addEventListener('click', startGame);
+                startGame();
+            })();
+
+            // GIOCO 2: MEMORIA SEQUENZIALE
+            (function initSequenceGame() {
+                const buttons = document.querySelectorAll('#game-2 .sequence-btn');
+                const startBtn = document.getElementById('start-sequence');
+                const levelDisplay = document.getElementById('level-sequence');
+                const feedback = document.getElementById('feedback-sequence');
+                let sequence = [], playerSequence = [], level = 1, canClick = false;
+
+                function nextLevel() {
+                    levelDisplay.textContent = level; playerSequence = []; canClick = false;
+                    feedback.textContent = translations[currentLang].feedbackSequenceWatch; feedback.className = 'game-feedback';
+                    sequence.push(Math.floor(Math.random() * 4));
+                    playSequence();
+                }
+                async function playSequence() {
+                    for (let i = 0; i < sequence.length; i++) {
+                        await new Promise(resolve => setTimeout(resolve, 600));
+                        buttons[sequence[i]].classList.add('lit');
+                        await new Promise(resolve => setTimeout(resolve, 400));
+                        buttons[sequence[i]].classList.remove('lit');
+                    }
+                    canClick = true; feedback.textContent = translations[currentLang].feedbackSequenceYourTurn;
+                }
+                function handleClick(e) {
+                    if (!canClick) return;
+                    const clickedId = parseInt(e.target.dataset.id);
+                    playerSequence.push(clickedId);
+                    e.target.classList.add('lit');
+                    setTimeout(() => e.target.classList.remove('lit'), 200);
+                    if (playerSequence[playerSequence.length - 1] !== sequence[playerSequence.length - 1]) {
+                        feedback.textContent = translations[currentLang].feedbackSequenceWrong.replace('{level}', level);
+                        feedback.classList.add('incorrect');
+                        if (level > 3) addScore('game-2', 100);
+                        startBtn.disabled = false; canClick = false;
+                        return;
+                    }
+                    if (playerSequence.length === sequence.length) {
+                        level++; setTimeout(nextLevel, 1000);
+                    }
+                }
+                function startGame() {
+                    sequence = []; playerSequence = []; level = 1; startBtn.disabled = true; nextLevel();
+                }
+                startBtn.addEventListener('click', startGame);
+                buttons.forEach(btn => btn.addEventListener('click', handleClick));
+            })();
+            
+            // GIOCO 3: ANAGRAMMI
+            (function initAnagramGame() {
+                const wordDisplay = document.getElementById('scrambled-word');
+                const input = document.getElementById('anagram-input');
+                const feedback = document.getElementById('feedback-anagram');
+                const words = ["CERVELLO", "MEMORIA", "LOGICA", "FUTURO", "SINAPSI", "MENTALE", "GIOCO"];
+                let currentWord = '', solvedCount = 0;
+
+                function nextWord() {
+                    input.value = ''; input.focus();
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    currentWord = words[Math.floor(Math.random() * words.length)];
+                    wordDisplay.textContent = currentWord.split('').sort(() => 0.5 - Math.random()).join('');
+                }
+                function checkWord(e) {
+                    if (e.key === 'Enter') {
+                        if (input.value.toUpperCase() === currentWord) {
+                            feedback.textContent = translations[currentLang].feedbackAnagramCorrect;
+                            feedback.classList.add('correct');
+                            solvedCount++;
+                            if (solvedCount >= 3) addScore('game-3', 100);
+                            setTimeout(nextWord, 1500);
+                        } else {
+                            feedback.textContent = translations[currentLang].feedbackAnagramIncorrect;
+                            feedback.classList.add('incorrect');
+                        }
+                    }
+                }
+                input.addEventListener('keydown', checkWord);
+                nextWord();
+            })();
+
+            // GIOCO 4: EFFETTO STROOP
+            (function initStroopGame() {
+                const wordDisplay = document.getElementById('stroop-word');
+                const buttonsContainer = document.getElementById('stroop-buttons');
+                const scoreDisplay = document.getElementById('score-stroop');
+                const livesDisplay = document.getElementById('lives-stroop');
+                const feedback = document.getElementById('feedback-stroop');
+                const colors = { 'Rosso': '#ef4444', 'Verde': '#22c55e', 'Blu': '#3b82f6', 'Giallo': '#eab308' };
+                const colorNames = Object.keys(colors);
+                let score = 0, lives = 3, currentWord, currentColor;
+
+                function setupButtons() {
+                    buttonsContainer.innerHTML = '';
+                    colorNames.forEach(name => {
+                        const button = document.createElement('button');
+                        button.textContent = name;
+                        button.className = 'game-button';
+                        button.style.backgroundColor = colors[name];
+                        button.addEventListener('click', () => checkAnswer(name));
+                        buttonsContainer.appendChild(button);
+                    });
+                }
+                function nextTurn() {
+                    if (lives <= 0) {
+                        feedback.textContent = translations[currentLang].feedbackStroopGameOver.replace('{score}', score);
+                        feedback.classList.add('incorrect');
+                        if (score >= 50) addScore('game-4', 100);
+                        wordDisplay.textContent = "FINITO";
+                        buttonsContainer.innerHTML = `<button id="restart-stroop" class="game-button">${translations[currentLang].restart}</button>`;
+                        document.getElementById('restart-stroop').addEventListener('click', startGame);
+                        return;
+                    }
+                    currentWord = colorNames[Math.floor(Math.random() * colorNames.length)];
+                    let tempColorNames = colorNames.filter(c => c !== currentWord);
+                    currentColor = tempColorNames[Math.floor(Math.random() * tempColorNames.length)];
+                    wordDisplay.textContent = currentWord;
+                    wordDisplay.style.color = colors[currentColor];
+                }
+                function checkAnswer(clickedColorName) {
+                    if (clickedColorName === currentColor) {
+                        score += 10; feedback.textContent = translations[currentLang].feedbackStroopCorrect; feedback.className = 'game-feedback correct';
+                    } else {
+                        lives--; feedback.textContent = translations[currentLang].feedbackStroopIncorrect; feedback.className = 'game-feedback incorrect';
+                    }
+                    scoreDisplay.textContent = score; livesDisplay.textContent = lives;
+                    setTimeout(nextTurn, 500);
+                }
+                function startGame() {
+                    score = 0; lives = 3;
+                    scoreDisplay.textContent = score; livesDisplay.textContent = lives;
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    setupButtons();
+                    nextTurn();
+                }
+                startGame();
+            })();
+
+            // GIOCO 5: TORRE DI HANOI
+            (function initHanoiGame() {
+                const container = document.getElementById('hanoi-container');
+                const movesDisplay = document.getElementById('moves-hanoi');
+                const feedback = document.getElementById('feedback-hanoi');
+                const numDisks = 3;
+                let towers = [[], [], []], selectedTower = null, moves = 0;
+
+                function render() {
+                    movesDisplay.textContent = moves;
+                    container.querySelectorAll('.hanoi-tower').forEach((towerEl, i) => {
+                        towerEl.innerHTML = '';
+                        towerEl.classList.toggle('selected', i === selectedTower);
+                        towers[i].forEach(diskSize => {
+                            const disk = document.createElement('div');
+                            disk.className = 'hanoi-disk';
+                            disk.style.width = `${30 + diskSize * 20}%`;
+                            disk.style.backgroundColor = `hsl(${diskSize * 40}, 70%, 60%)`;
+                            towerEl.appendChild(disk);
+                        });
+                    });
+                }
+                function handleTowerClick(e) {
+                    const towerIndex = parseInt(e.currentTarget.dataset.tower);
+                    if (selectedTower === null) {
+                        if (towers[towerIndex].length > 0) selectedTower = towerIndex;
+                    } else {
+                        const from = towers[selectedTower], to = towers[towerIndex];
+                        const disk = from[from.length - 1], topOnTarget = to[to.length - 1];
+                        if (selectedTower !== towerIndex && (!topOnTarget || disk < topOnTarget)) {
+                            to.push(from.pop()); moves++;
+                            feedback.textContent = ''; feedback.className = 'game-feedback';
+                        } else {
+                            feedback.textContent = translations[currentLang].feedbackHanoiInvalid; feedback.className = 'game-feedback incorrect';
+                        }
+                        selectedTower = null;
+                    }
+                    render(); checkWin();
+                }
+                function checkWin() {
+                    if (towers[2].length === numDisks) {
+                        feedback.textContent = translations[currentLang].feedbackHanoiWin.replace('{moves}', moves);
+                        feedback.className = 'game-feedback correct';
+                        addScore('game-5', 100);
+                        container.querySelectorAll('.hanoi-tower').forEach(t => t.removeEventListener('click', handleTowerClick));
+                    }
+                }
+                function startGame() {
+                    towers = [[], [], []];
+                    for (let i = numDisks; i > 0; i--) towers[0].push(i);
+                    selectedTower = null; moves = 0;
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    render();
+                    container.querySelectorAll('.hanoi-tower').forEach(t => t.addEventListener('click', handleTowerClick));
+                }
+                startGame();
+            })();
+
+            // GIOCO 6: CALCOLO RAPIDO
+            (function initCalcGame() {
+                const problemDisplay = document.getElementById('problem-calc');
+                const input = document.getElementById('calc-input');
+                const timerDisplay = document.getElementById('timer-calc');
+                const scoreDisplay = document.getElementById('score-calc');
+                const feedback = document.getElementById('feedback-calc');
+                let score = 0, timer, timeLeft = 30, currentAnswer;
+
+                function newProblem() {
+                    const a = Math.floor(Math.random() * 10) + 1;
+                    const b = Math.floor(Math.random() * 10) + 1;
+                    currentAnswer = a + b;
+                    problemDisplay.textContent = `${a} + ${b} = ?`;
+                    input.value = ''; input.focus();
+                }
+                function checkAnswer(e) {
+                    if (e.key === 'Enter') {
+                        if (parseInt(input.value) === currentAnswer) {
+                            score++;
+                            scoreDisplay.textContent = score;
+                        }
+                        newProblem();
+                    }
+                }
+                function startGame() {
+                    score = 0; timeLeft = 30;
+                    scoreDisplay.textContent = score;
+                    timerDisplay.textContent = timeLeft + 's';
+                    input.disabled = false;
+                    input.addEventListener('keydown', checkAnswer);
+                    newProblem();
+                    timer = setInterval(() => {
+                        timeLeft--;
+                        timerDisplay.textContent = timeLeft + 's';
+                        if (timeLeft <= 0) {
+                            clearInterval(timer);
+                            input.disabled = true;
+                            input.removeEventListener('keydown', checkAnswer);
+                            feedback.textContent = translations[currentLang].feedbackCalcGameOver.replace('{score}', score);
+                            feedback.classList.add('correct');
+                            if (score > 5) addScore('game-6', 100);
+                        }
+                    }, 1000);
+                }
+                startGame();
+            })();
+            
+            // GIOCO 7: TROVA L'INTRUSO
+            (function initIntruderGame() {
+                const optionsContainer = document.getElementById('intruder-options');
+                const feedback = document.getElementById('feedback-intruder');
+                const sets = [
+                    { items: ['🍎', '🍌', '🥦', '🍊'], intruder: '🥦' },
+                    { items: ['🚗', '🚲', '✈️', '🚢'], intruder: '✈️' },
+                    { items: ['🐶', '🐱', '🦁', '🐠'], intruder: '🐠' },
+                    { items: ['⚽️', '🏀', '🏈', '💻'], intruder: '💻' }
+                ];
+                let currentSet;
+
+                function newRound() {
+                    optionsContainer.innerHTML = '';
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    currentSet = sets[Math.floor(Math.random() * sets.length)];
+                    currentSet.items.sort(() => 0.5 - Math.random()).forEach(item => {
+                        const option = document.createElement('span');
+                        option.className = 'intruder-option';
+                        option.textContent = item;
+                        option.addEventListener('click', () => checkAnswer(item));
+                        optionsContainer.appendChild(option);
+                    });
+                }
+                function checkAnswer(selectedItem) {
+                    if (selectedItem === currentSet.intruder) {
+                        feedback.textContent = translations[currentLang].feedbackIntruderCorrect;
+                        feedback.classList.add('correct');
+                        addScore('game-7', 100);
+                        setTimeout(newRound, 1500);
+                    } else {
+                        feedback.textContent = translations[currentLang].feedbackIntruderIncorrect;
+                        feedback.classList.add('incorrect');
+                    }
+                }
+                newRound();
+            })();
+
+            // GIOCO 8: PERCORSO NUMERICO
+            (function initNumberPathGame() {
+                const grid = document.getElementById('number-path-grid');
+                const timerDisplay = document.getElementById('timer-path');
+                const feedback = document.getElementById('feedback-path');
+                let numbers = [], currentNum = 1, timer;
+
+                function startGame() {
+                    clearInterval(timer);
+                    timer = null;
+                    grid.innerHTML = '';
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    currentNum = 1;
+                    timerDisplay.textContent = '0.0s';
+                    numbers = Array.from({ length: 25 }, (_, i) => i + 1).sort(() => 0.5 - Math.random());
+                    
+                    numbers.forEach(num => {
+                        const cell = document.createElement('div');
+                        cell.className = 'number-path-cell';
+                        cell.textContent = num;
+                        cell.dataset.num = num;
+                        cell.addEventListener('click', handleCellClick);
+                        grid.appendChild(cell);
+                    });
+                }
+                function handleCellClick(e) {
+                    const num = parseInt(e.target.dataset.num);
+                    if (num === 1 && !timer) {
+                        let startTime = Date.now();
+                        timer = setInterval(() => {
+                            timerDisplay.textContent = ((Date.now() - startTime) / 1000).toFixed(1) + 's';
+                        }, 100);
+                    }
+                    if (num === currentNum) {
+                        e.target.classList.add('correct');
+                        currentNum++;
+                        if (currentNum > 25) {
+                            clearInterval(timer);
+                            feedback.textContent = translations[currentLang].feedbackPathComplete.replace('{time}', timerDisplay.textContent);
+                            feedback.classList.add('correct');
+                            addScore('game-8', 100);
+                        }
+                    }
+                }
+                startGame();
+            })();
+
+            // GIOCO 9: LOGICA CON LE BILANCE
+            (function initBalanceGame() {
+                const options = document.querySelectorAll('#balance-options span');
+                const feedback = document.getElementById('feedback-balance');
+                const correctAnswer = '🟢';
+
+                options.forEach(option => {
+                    option.addEventListener('click', () => {
+                        if (option.textContent === correctAnswer) {
+                            feedback.textContent = translations[currentLang].feedbackBalanceCorrect;
+                            feedback.classList.add('correct');
+                            addScore('game-9', 100);
+                        } else {
+                            feedback.textContent = translations[currentLang].feedbackBalanceIncorrect;
+                            feedback.classList.add('incorrect');
+                        }
+                    });
+                });
+            })();
+
+            // GIOCO 10: INDOVINA IL CODICE
+            (function initCodeBreakerGame() {
+                const paletteContainer = document.getElementById('color-palette');
+                const boardContainer = document.getElementById('code-board');
+                const checkBtn = document.getElementById('check-code-btn');
+                const feedback = document.getElementById('feedback-code');
+                const colors = ['#ef4444', '#3b82f6', '#22c55e', '#eab308', '#a855f7', '#ec4899'];
+                const maxAttempts = 8;
+                let secretCode = [], currentAttempt = 0, selectedColor = colors[0];
+
+                function startGame() {
+                    secretCode = Array.from({length: 4}, () => colors[Math.floor(Math.random() * colors.length)]);
+                    currentAttempt = 0;
+                    feedback.textContent = ''; feedback.className = 'game-feedback';
+                    checkBtn.disabled = false;
+                    drawBoard();
+                    drawPalette();
+                }
+
+                function drawPalette() {
+                    paletteContainer.innerHTML = '';
+                    colors.forEach(color => {
+                        const peg = document.createElement('div');
+                        peg.className = 'code-peg';
+                        peg.style.backgroundColor = color;
+                        peg.addEventListener('click', () => selectedColor = color);
+                        paletteContainer.appendChild(peg);
+                    });
+                }
+
+                function drawBoard() {
+                    boardContainer.innerHTML = '';
+                    for (let i = 0; i < maxAttempts; i++) {
+                        const row = document.createElement('div');
+                        row.className = 'flex items-center gap-2 mb-1';
+                        row.innerHTML = `
+                            <div class="flex gap-1">
+                                ${Array(4).fill('<div class="code-peg" data-row="'+i+'"></div>').join('')}
+                            </div>
+                            <div class="grid grid-cols-2 gap-0.5 w-8 h-8">
+                                ${Array(4).fill('<div class="feedback-peg"></div>').join('')}
+                            </div>
+                        `;
+                        boardContainer.appendChild(row);
+                    }
+                    boardContainer.querySelectorAll('.code-peg').forEach(peg => {
+                        peg.addEventListener('click', (e) => {
+                            if (parseInt(e.target.dataset.row) === currentAttempt) {
+                                e.target.style.backgroundColor = selectedColor;
+                            }
+                        });
+                    });
+                }
+                
+                function checkAttempt() {
+                    const currentRow = boardContainer.children[currentAttempt];
+                    const guess = Array.from(currentRow.querySelectorAll('.code-peg')).map(p => p.style.backgroundColor);
+                    
+                    if (guess.some(color => !color)) {
+                        feedback.textContent = translations[currentLang].feedbackCodeCompleteRow;
+                        feedback.className = 'game-feedback incorrect';
+                        return;
+                    }
+
+                    let blackPegs = 0, whitePegs = 0;
+                    let secretCopy = [...secretCode];
+                    let guessCopy = [...guess];
+
+                    for (let i = 3; i >= 0; i--) {
+                        if (guessCopy[i] === secretCopy[i]) {
+                            blackPegs++;
+                            secretCopy.splice(i, 1);
+                            guessCopy.splice(i, 1);
+                        }
+                    }
+
+                    for (let i = 0; i < guessCopy.length; i++) {
+                        const indexInSecret = secretCopy.indexOf(guessCopy[i]);
+                        if (indexInSecret > -1) {
+                            whitePegs++;
+                            secretCopy.splice(indexInSecret, 1);
+                        }
+                    }
+
+                    const feedbackPegs = currentRow.querySelectorAll('.feedback-peg');
+                    for (let i = 0; i < blackPegs; i++) feedbackPegs[i].classList.add('black');
+                    for (let i = 0; i < whitePegs; i++) feedbackPegs[blackPegs + i].classList.add('white');
+
+                    if (blackPegs === 4) {
+                        feedback.textContent = translations[currentLang].feedbackCodeWin.replace('{attempts}', currentAttempt + 1);
+                        feedback.className = 'game-feedback correct';
+                        addScore('game-10', 100);
+                        checkBtn.disabled = true;
+                        return;
+                    }
+                    
+                    currentAttempt++;
+                    if (currentAttempt >= maxAttempts) {
+                        feedback.innerHTML = translations[currentLang].feedbackCodeGameOver + secretCode.map(c => `<span class="inline-block w-4 h-4 rounded-full align-middle" style="background-color:${c}"></span>`).join(' ');
+                        feedback.className = 'game-feedback incorrect';
+                        checkBtn.disabled = true;
+                    }
+                }
+
+                checkBtn.addEventListener('click', checkAttempt);
+                startGame();
+            })();
+
+        });
+    </script>
+</body>
+</html>
